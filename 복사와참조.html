@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script>
+    //복사(copy)와 참조(reference)는 개발자라면 꼭 정확히 구분해야함
+    //기본형(primitive type)일 때 복사
+    //string, number, boolean, null, undefined // stack에 주소와 value가 담겨있다.
+    //기본형은 속성과 메소드가 없음
+    //string에 메소드를 붙이는 순간 자동으로 Wrapper 객체 String으로 바뀜(string -> String)
+    //var k = "gyghgh" k.substring(0,2);
+    //객체형(Object type)일 때 참조 -> 객체를 복사하게되면 메모리 차지가 심해서 참조가 사용
+    //json, 배열 //객체는 heap영역에 담기고 stack에 주소와 객체의 주소가 담긴 변수가 있다.
+
+    /*
+    var a = "ㅎㅎㅎ";
+    var b = a; // 복사가 이루어짐
+    bbb = "호호호"
+    alert(a); // ㅎㅎㅎ(복사되었기 때문에 영향이 없음)
+    */
+    var c = {name : "성겸찡", age : 26};
+
+    var d = c; // 주소만 전달됨(포인터)
+    d.name = "김성겸";
+    alert(c.name); // 김성겸(참조)
+    alert(d.name); // 김성겸
+</script>

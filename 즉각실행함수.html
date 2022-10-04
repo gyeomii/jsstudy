@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script>
+    //즉각실행함수 -> 주로 라이브러리에 쓰임
+    //표현식 : 연산결과가 하나로 귀결되는것
+    /*
+    function(){//선언 문법에 어긋남
+
+    }
+    */
+   //1번방법
+    (function(){//expression(표현식)으로 되면 OK
+        alert("즉각실행함수 1 ");
+    })();
+    //2번방법
+    (function(param){//expression(표현식)으로 되면 OK
+        alert("()즉각실행함수 2 " + param);
+    })("param value");
+    //3번방법 -> not이 붙어서 인터프리터가 뒤의 내용을 해석하려고 하면서 실행이 된다.
+    !function(param){//expression(표현식)으로 되면 OK
+        alert("!즉각실행함수 3 " + param);
+    }("param value");
+    //4번방법 -> +,-가 붙어서 인터프리터가 뒤의 내용을 해석하려고 하면서 실행이 된다.
+    +function(param){//expression(표현식)으로 되면 OK
+        alert("+즉각실행함수 4 " + param);
+    }("param value");
+
+
+</script>
