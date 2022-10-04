@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script>
+    //JSON(JavaScript Object Notation 자바스크립트 객체 표기법) -> 너무너무 좋다
+    //XML(Extensible Markup Language), CSV(Comma Seperated Value)
+    var v_obj = {
+        name : "김성겸",
+        style : "프론트 스타일"
+    }
+    var v_obj2 = {}; // new  Object(); , [] => new Array();
+    v_obj.name = "김성겸";
+    v_obj.style = "프론트 스타일"; 
+
+    var aaa = "merong";
+    var myObj = {
+        aaa : "메롱", //속성명은 자동으로 문자열로 처리됨(변수가 들어가지 못함)
+        [aaa] : "메롱바", //위, 아래 둘 다 가능, []를 사용하면 변수명을 넣을 수 있다.
+        ["0"] : "메롱롱"
+    }
+    alert(myObj.aaa); // 메롱
+    alert(myObj["aaa"]); //메롱 // JSON은 속성명의 배열식 선언과 접근을 허용해줌(중요)
+
+    alert(myObj.merong); //메롱바
+    alert(myObj["merong"]); //메롱바
+    //alert(myObj.0); // 변수명은 영문자 또는 _,$로만 시작할 수 있다는 제약사항이 있음
+    alert(myObj[0]); //메롱롱
+    alert(myObj["0"]); // 메롱롱
+
+    var v_obj3 ={};
+    v_obj3.merong = "메롱";
+    delete v_obj3.merong; //속성을 지울 때는 delete 사용
+    alert(v_obj3.merong); //undefiend
+
+    var v_obj4 ={
+        name : "기민혁",
+        age : "27"
+    };
+
+    v_obj4 = {}; //memory leak(메모리 누수)
+    v_obj4.name = "김성겸";
+
+    alert(v_obj4.name); // 김성겸
+    //바깥을 ''로 하고 속성을 ""로 감싸야 한다.
+    var v_objStr = '{"name" : "한태훈", "age" : "28"}'; // 문자열(형태가 json선언 문법과 일치)
+    var v_obj5 = JSON.parse(v_objStr); // 문지열이 객체표현을 담고 있다면 객체로 변환
+    alert(v_obj5.name); // 한태훈
+</script>

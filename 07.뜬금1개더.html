@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script>
+    //var v_merong = "메롱"; // 전역변수 선언
+    alert(v_merong);// 메롱
+    alert(window.v_merong); // 메롱 //윈도우에 속성을 선언하는 것과 전역변수 선언은 일치
+    
+    window.myLover = "블랙핑크 지수";
+    alert(myLover);// 메롱
+    alert(window.myLover); // 메롱 //윈도우에 속성을 선언하는 것과 전역변수 선언은 일치
+    
+    function f_aaa(){ //전역 함수를 선언하는 것은 window객체에 메소드를 추가하는것과 같다.
+        alert("메롱롱");
+    }
+
+    window.f_aaa();
+</script>
