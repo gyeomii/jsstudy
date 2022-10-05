@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>    
+    <meta charset='utf-8'>
+    <script>
+    //플리커 open Api 데이터가 자바스크립트 함수명 호출 방식으로 되어있어
+    //미리 호출되는 해당함수를 만들어 둠
+    function jsonFlickrFeed(p_arg){
+        v_disp.innerHTML = "";
+        var v_items = p_arg.items;
+        for(var i=0; i<v_items.length; i++){
+            var v_img = document.createElement("img"); //img태그 맹글기(메모리에)
+            v_img.src = v_items[i].media.m;//플리커에서 받은 이미지 url
+            v_disp.appendChild(v_img);//눈에 띠네
+        }
+    }
+    </script>
+</head>
+<body>
+    <input type="text" id="schText" value=""/>
+    <input type="button" id="btnAdd" value="search" onclick="f_imgSch()"/>
+    <div id="disp"></div>
+    <script>
+        var v_schText = document.querySelector("#schText");
+        var v_disp = document.querySelector("#disp");
+        var v_preURL = "https://www.flickr.com/services/feeds/photos_public.gne?format=json&tags=";
+
+        function f_imgSch(){
+            var v_schURL = v_preURL + v_schText.value; //요청 URL
+            var v_script = document.createElement("script"); //스크립트 만들기
+            v_script.src = v_schURL; //속성 넣어주기
+            document.head.appendChild(v_script);
+            document.head.removeChild(document.head.children[2]);
+        }
+    </script>
+
+    <!-- 이런 방식을 JSONP(JSON Pading)이라고 부름
+        이렇게 주면 사용하기가 편한데, 이렇게 주는 사이트는 별로 없음
+        최대 장점은 cross-origin 제약사항이 없음 -->
+    <script src="https://www.flickr.com/services/feeds/photos_public.gne?tags=자바&format=json"></script>
+</body>

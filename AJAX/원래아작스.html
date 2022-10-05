@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<body>
+    <div id="disp" style="text-align: center;"></div>
+    <input type="button" value="ajax" onclick="f_ajax()" />
+</body>
+<script>
+    function f_ajax() {
+        var v_ajax = new XMLHttpRequest(); // 요건 항상 지역변수로.. 전역으로 하면 미워용
+        v_ajax.open("get", "data.xml", true); 
+        v_ajax.onreadystatechange = function () {  
+            if (v_ajax.readyState == 4 && v_ajax.status == 200) {
+                //xml은 html문서처럼 DOM으로 처리하면 훨씬 편함
+                
+                var v_xmlDoc = v_ajax.responseXML; // 바든 내용이xml문자열이라면
+                console.log(v_xmlDoc);  // DOM 인 것을 누느로 화긴
+
+                var v_friends = v_xmlDoc.querySelectorAll("friend");
+                var v_tblStr = "<table border=1>";
+
+                // 한번만 출력하면 되기에 억지로 꼼지락 꼼지락 헤더명 맹글기    
+                var v_headerNames = v_friends[0].children;
+                v_tblStr += "<tr>";
+                for(var i=0; i<v_headerNames.length; i++){
+                    v_tblStr += "<th>" + v_headerNames[i].tagName + "</th>";
+                }    
+                v_tblStr += "</tr>";
+
+                //내용 출력
+                for(var i=0; i<v_friends.length; i++){
+                    var v_childs = v_friends[i].children;
+                    v_tblStr += "<tr>";
+                    for(var j=0; j<v_childs.length; j++){
+                        v_tblStr += "<td>" + v_childs[j].innerHTML + "</td>"
+                    }
+                    v_tblStr += "</tr>";
+
+                }
+                v_tblStr += "</table>";
+                document.querySelector("#disp").innerHTML += v_tblStr;
+                
+                //var v_receiveData = v_ajax.responseText 
+                //console.log(v_receiveData);// 온 데이타를 꼭 먼저 누느로 화긴하는 습관 필요
+                
+                //console.log(JSON.parse(v_receiveData)); // 문자열을 객체롱
+                //여기서 받은 데이타를 table형식으로 표현해 보삼(3분)
+                /*
+                var v_arrData = JSON.parse(v_receiveData);
+                var v_tblStr = "<table border=1>";
+                v_tblStr += "<tr><th>이름</th><th>나이</th><th>별명</th><tr>";
+
+                for(var i=0; i<v_arrData.length; i++){
+                    v_tblStr += "<tr>";
+                    v_tblStr += "<td>" + v_arrData[i].name + "</td>";
+                    v_tblStr += "<td>" + v_arrData[i].age + "</td>";
+                    v_tblStr += "<td>" + v_arrData[i].alias + "</td>";
+                    v_tblStr += "</tr>";
+                }
+                v_tblStr += "</table>";
+                document.querySelector("#disp").innerHTML += v_tblStr;
+                */
+
+                /*
+                var v_lines = v_receiveData.split("\n");   // 라인별 문자열
+                var v_headers = v_lines[0].split(",");     // 컬럼명(header)을 위해 미리 split
+
+                var v_tblStr = "<table border=1>";
+                v_tblStr += "<tr><th>" + v_headers[0] + 
+                             "</th><th>" + v_headers[1] + 
+                             "</th><th>" + v_headers[2] + "</th><tr>";    
+
+                for(var i=1; i< v_lines.length; i++){
+                    var v_values = v_lines[i].split(",");
+                    v_tblStr += "<tr>";
+                    v_tblStr += "<td>" + v_values[0] + "</td>";
+                    v_tblStr += "<td>" + v_values[1] + "</td>";
+                    v_tblStr += "<td>" + v_values[2] + "</td>";
+                    v_tblStr += "</tr>";
+                }
+                v_tblStr += "</table>";
+                document.querySelector("#disp").innerHTML += v_tblStr;
+                */
+            }
+        }
+        v_ajax.send(); 
+    }
+
+                // var v_receiveData = v_ajax.responseText;
+                // console.log(v_receiveData);
+                // var v_json = JSON.parse(v_receiveData);
+                // var tblStr = "<table border=1>"
+                // tblStr += `<tr><td>이름</td><td>나이</td><td>별명</td><tr>`;
+                // for (var i = 0; i < v_json.length; i++) {
+                //     var name = v_json[i].name;
+                //     var age = v_json[i].age;
+                //     var alias = v_json[i].alias;
+                //     tblStr += "<tr>"
+                //     tblStr += "<td>" + name + "</td>"
+                //     tblStr += "<td>" + age + "</td>"
+                //     tblStr += "<td>" + alias + "</td>"
+                //     tblStr += "<tr>"
+                // }
+
+                // var v_ajax = new XMLHttpRequest();
+                // v_ajax.open("get", "data.csv", true);
+                // v_ajax.onreadystatechange = function () {
+                //     if (v_ajax.readyState == 4 && v_ajax.status == 200) {
+                //         console.log(v_ajax.responseText);
+                //         var v_receiveData = v_ajax.responseText;
+                //         var v_lines = v_receiveData.split("\n");
+                //         var v_header = v_lines[0];
+                //         console.log(v_lines);
+                //         var tblStr = "<table border=1>"
+                //             tblStr += `<tr><td>${v_header.split(",")[0]}</td><td>${v_header.split(",")[1]}</td><td>${v_header.split(",")[2]}</td><tr>`;
+                //             for(var i=1; i<v_lines.length; i++) {
+                //                 var name = v_lines[i].split(",")[0];
+                //                 var age = v_lines[i].split(",")[1];
+                //                 var ch = v_lines[i].split(",")[2];
+                //                 tblStr += "<tr>"
+                //                 tblStr += "<td>"+ name +"</td>"    
+                //                 tblStr += "<td>"+ age +"</td>"    
+                //                 tblStr += "<td>"+ ch +"</td>"    
+                //                 tblStr += "<tr>"
+                //             }
+                //             
+</script>
+
+
+<script>
+    //2000년대 초 ajax(Asynchronouse JavaScript XML)를 아무도 믿지 않았지만
+    //구글이 gmail과 구글 map을 비동기 아작스로 훌륭히 구현하면서
+    //개발자 필수사항으로 확립되고, javascript가 하나의 언어로 자리잡는데 기여함
+    //동기(인간친화적 -> 한단계씩 처리), 비동기(성능이 좋다 -> 기다리지 않음)
+
+    // var v_ajax = new XMLHttpRequest(); //전역변수로 쓰지 말기
+    // //  v_ajax.open("메소드","URL","비동기여부"); // 시킬일 지정
+    // v_ajax.open("get", "data.html", true); // 시킬일 지정
+    // v_ajax.onreadystatechange = function () {//통신에 변화가 발생하면 이벤트 발생
+    //     //우리는 일이 끝났는지만 관심있음.
+    //     if (v_ajax.readyState == 4 && v_ajax.status == 200) {
+    //         alert(v_ajax.responseText);//서버가 준 내용
+    //         var v_receiveData = v_ajax.responseText
+    //         document.querySelector("#disp").innerHTML = v_receiveData;
+    //     }
+    // }
+    // v_ajax.send();
+    // alert("내가먼저");
+    // alert("내가먼저");
+    // alert("내가먼저");
+    // alert("내가먼저");
+    // alert(v_ajax.responseText);
+</script>
