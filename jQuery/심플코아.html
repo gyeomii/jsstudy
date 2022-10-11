@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<body>
+    <div>심재린</div>
+    <div class="merong">김민수</div>
+    <div>조정현</div>
+    <div>윤재열</div>
+</body>
+<script>
+    var aa = !0;  // 요따구로 true를 표현 4자 -> 2자로 용량 줄이기,  uglyfy(못생기게 하다)
+//json과 callback이 이해된다면 jQuery($)를 간단하게 맹글어 볼 수 있어용
+//즉각실행함수
+(function(){
+    var $ = function(p_selector){
+        return new Hr(p_selector);         // 요기서 쌩성해서 돌려줌
+    }
+
+    var Hr=function(p_selector){
+        var elems = document.querySelectorAll(p_selector);
+        //선택된 것들을 생성되는 객체의 속성으로 옮겨담기, 그래야 가지고 다니니깡
+        this.length = elems.length; 
+        for(var i=0; i<this.length; i++){
+            this[i] = elems[i];
+        }
+        return this;  // 명시적 표현 (이 function은 생성자로 사용되고 있음)
+    }
+    //Hr.prototype.메소드명 = function(){};  요기까정 했음!!
+
+    window.$=$;  // 전역변수 테코닉 활용 전역과 지역을 참조로 연껼
+})();
+
+
+
+//var v_divs = new Hr("div");
+var v_divs = $("div");  // new를 업쎄버림
+console.log(v_divs);
+console.log($(".merong"));
+
+</script>

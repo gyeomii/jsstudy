@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<body>
+    <input type="button" value="눌러" id="myBtn" />
+</body>
+<script>
+    //on이벤트명과 addEventListener가 동작이 다른 부분을 정확히 머리담기
+
+    var v_myBtn = document.querySelector("#myBtn");
+    function f_click() {
+
+    }
+    //1.
+    v_myBtn.onclick = function () {
+        v_myBtn.addEventListener("click", function () {
+            alert("3번이다");
+        });
+    }
+    //2.
+    // v_myBtn.onclick = function () {
+    //     alert("2번이다");
+    // } // 2번만 실행됨
+//---------------------------
+//     //3.
+//     v_myBtn.addEventListener("click",function(){
+//         alert("3번이다");
+//     });
+// //4.
+//     v_myBtn.addEventListener("click",function(){
+//         alert("4번이다");
+//     });//둘다 실행됨
+//-> onclick은 같은 객체에 대한 여러 이벤트를 덮어 씌움, addEventListener는 중복이어도 쌓ㅇ;ㅁ
+    /*
+    //this가 어렵다고용?
+    function f_check(p_arg1,p_arg2){
+        console.log(this,p_arg1,p_arg2); //? window
+    }
+   //window.f_check();
+
+   var myObj = {name:"로제",company:"YG"};
+
+   f_check.call(myObj,"유미","잤는데 눈이 작데용"); 
+   //apply는 call과 기능이 똑같지만, 단지 매개변수들을 배열에 담아서 한번에 보내야 함
+   f_check.apply(myObj,["유미","잤는데 눈이 작데용"]);
+    */
+    /*
+    var 곽금규 = {name:"금귤",main:"인프라"};
+ 
+    곽금규.메소드 = f_check;
+    곽금규.메소드();   //? 여기서의 this?
+    // 메소드 앞 객체를 this값이 따라 간다는 걸 알 수 있음.
+    // 하지만 불편하고 애매함. 매번 소스를 누느로 확인해야 해서 너무 피곤
+ 
+    // 개발자 커뮤니티의 강력한 요구에 call, apply, bind(완던 둥요) 가 출현
+    // this값을 개발자가 강제로 지정
+    */
+</script>
