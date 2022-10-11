@@ -4,10 +4,19 @@
     <div>심재린</div>
     <div class="merong">김민수</div>
     <div>조정현</div>
-    <div>윤재열</div>
+    <div class="merong">윤재열</div>
+    <input type="text" name="nm_text" id="id_txt" value="성겸김"/> 
+    <input type="text" name="nm_text" id="id_txt" value="성겸김"/> 
+    <input type="text" name="nm_text" id="id_txt" value="성겸김"/> 
+    <input type="text" name="nm_text" id="id_txt" value="성겸김"/> 
+    <input type="text" name="nm_text" id="id_txt" value="성겸김"/> 
 </body>
 <script>
-    var aa = !0;  // 요따구로 true를 표현 4자 -> 2자로 용량 줄이기,  uglyfy(못생기게 하다)
+// var attr = "name";
+// alert(document.querySelector("#id_txt").name);
+// alert(document.querySelector("#id_txt")[attr]); // 배열식 접근법
+
+var aa = !0;  // 요따구로 true를 표현 4자 -> 2자로 용량 줄이기,  uglyfy(못생기게 하다)
 //json과 callback이 이해된다면 jQuery($)를 간단하게 맹글어 볼 수 있어용
 //즉각실행함수
 (function(){
@@ -24,16 +33,89 @@
         }
         return this;  // 명시적 표현 (이 function은 생성자로 사용되고 있음)
     }
-    //Hr.prototype.메소드명 = function(){};  요기까정 했음!!
+    // Hr.prototype  요놈을 밖에서 접근할수 있게 해줘야 모두가 편해짐
 
     window.$=$;  // 전역변수 테코닉 활용 전역과 지역을 참조로 연껼
+    $.fn= Hr.prototype;  // 전역변수 $의 fn 속성명으로 Hr.prototype에 접근할 수 있음
 })();
 
+//jQuery에서 요렇게 메소드를 추가하는 것을 Plugin을 개발한다라고 과장해서 부름
+$.fn.eq = function(p_index){
+    return this[p_index];
+}
+// attr 메소드 만들기
+$.fn.attr = function(p_attr, p_opt){
+    //읽기
+    if(typeof(p_attr) == "string" && typeof(p_opt) == "undefined"){
+        return this[0][p_attr];//배열식 접근법
+    }
 
+    // || 하고 && 잘 쓰는 법 : ||는 앞에 true일 가능성이 높은것, &&는 앞에 false일 가능성이 높은것
+    //전부 쓰기
+    if(typeof(p_attr) == "string" && p_opt){ // p_opt의 값이 있다면
+        for(var i=0; i<this.length; i++){
+            this[i][p_attr] = p_opt; // 속성과 벨류 세팅
+        }
+        return this; // 메소드 체이닝
+    }
+
+    //골라서(조건부) 쓰기
+    if(typeof(p_attr) == "string" && typeof(p_opt) == "function"){ // p_opt의 값이 있다면
+        for(var i=0; i<this.length; i++){
+            this[i][p_attr] = p_opt.call(this[i],i, this[i][p_attr]);
+        }
+        return this; // 메소드 체이닝
+    }
+}
+
+// html 메소드 만들기 : 읽기, 전부쓰기, 일부쓰기 (보통 요따위 패턴으로 구성)
+$.fn.html = function(p_arg){  // innerHTML 속성을 편하게 다루는 메소드
+    if(!p_arg){  // 매개변수가 값이 넘어오지 않았을 때
+        return this[0].innerHTML;   // 읽기는 무조건 첫번째 요소(element)의 값
+    }
+
+    if(typeof(p_arg) == "string"){  // 매개변수로 문자열이 넘어 왔을 때
+        for(var i=0; i<this.length; i++){
+            this[i].innerHTML = p_arg;      
+        }
+        return this; //메소드에 사용된 객체를 리턴해주면 메소드 체이닝을 사용할 수 있음
+    }
+    
+    //jQuery의 콜백부분은 거의 대부분 요따구로 되어있음(Good Idea but Performance Problem)
+    if(typeof(p_arg) == "function"){ 
+        for(var i=0; i<this.length; i++){
+            this[i].innerHTML = p_arg.call(this[i],i,this[i].innerHTML); // 인덱스와 원래가지고 있는 innerHTML을 넘김
+        } // call, apply, bind : this를 내 맘대로 컨트롤
+        return this;
+    }
+}
+
+alert($("input").attr("type"));
+
+$("div").html(function(p_index,p_html){
+    console.log("elem",this.innerHTML); 
+    if(p_index == 0){
+        this.style.fontSize="5em";
+        return "어쩌구 저쩌궁 심재린";
+    }
+    return p_html;// 원래꺼 그대로 리턴
+    //alert(p_index + " : " + p_html); // 누느로 화긴
+}).html(function(p_index,p_html){
+    if(this.innerHTML == "조정현"){
+        return "<h1>"+ p_html +"</h1>";
+    }
+    return p_html;
+});
+
+//요기서 jQuery 필수 메소드를 html,attr,val
+//alert($("div").html());
+//alert($(".merong").html());
+//$(".merong").html("<h1>동석이 짱</h1>");
+//$(".merong").html("<h1>동석이 짱</h1>").html("<h1>금규가 다시 덮어쑴</h1>");
 
 //var v_divs = new Hr("div");
-var v_divs = $("div");  // new를 업쎄버림
-console.log(v_divs);
-console.log($(".merong"));
+//var v_divs = $("div").eq(1);
+//console.log(v_divs);
+//console.log($(".merong"));
 
 </script>
