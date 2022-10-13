@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<script>
+    // 자바스크립트 핵심버젼 변화 ES5-> ES6(2015년말)
+    // 마이크로소프트 IE11(window7에서 마지막)이 ES6이상을 지원하지 않아서 그동안 못 쓰고 있었음
+    // caniuse.com에서 호환성 확인 습관,js 검색시 뒤에 mdn을 꼭 붙여서 검색
+    // 2022년 ms는 IE11을 support 하지 않기로 발표(지원종료) -> ES6이상으로 본격적으로 나아갈 때
+    // 변화는 먼저 대응할 수록 유리
+
+    // let, const, template string, spread operator, destructing, arrow function, promise, async, await...
+
+    //var vs let -> var 는 function scope, let은 block scope({})
+    for(var i = 1; i <=10; i++) {
+    }
+    alert(i); // 11
+
+    function f_check(){
+        for(var i = 1; i <=10; i++) {
+        }
+    }
+    f_check();
+    alert(i); // undefined
+
+    for(let j = 1; j <=10; j++) {
+    }
+    alert(j); // undefined
+
+    //const -> 상수 선언 : 재선언이 불가 but 참조타입은 데이터를 바꿀 수 있음, 타입변경은 불가
+    const aa = {fbi:"건영이 1등 왔음"};
+    aa.fbi = "아님"; // ok
+    aa = {} // X (객체 자체를 바꿀수는 없다.)
+    aa.fff= "gg"; // ok
+    console.log(aa);
+
+    const myArr = ["1", "2"];
+    myArr[0] = {name:"민혁"} //ok (객체 안 데이터는 바꿀 수 있다.)
+    console.log(myArr);
+
+    let ss="성우";
+    let dd= aa + "는" + "목소리가 좋아요"; // es5에서 문자열 더하기
+
+    let cc = `${ss} 는 목소리가 정말 좋아요`;// es6의 template string, 백틱사용에 주의
+    // ${} 표현이 spring EL표현과 일치
+    //js파일안에선 상관없고, jsp에서 사용할 때 ${}앞에 역슬래시(\)를 붙여서 
+    //EL이 아니고 $가 단순 문자임을 알려줘야함 \${}
+</script>
