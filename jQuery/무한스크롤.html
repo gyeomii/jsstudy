@@ -15,6 +15,13 @@
 </script>
 </div>  
 <script>
+    windwo.scrollTop(0,0);
+    //구글의 답변 : 버그가 아니고 자신들 스크립트 엔진이 너무 좋아서 발생한 오류
+    //시간을 쫌 만 더 주면 된다는 현학적 답변을 받았음
+    setTimeout(()=>{
+		window.scrollTo(0,0);//스크롤 맨 위로
+	},30);//미세한 시간차를 주어 이동후 작동하도록.
+    
     //윈도우 스크롤 이벤토
     var v_tunningVal = 50;  // 바닥보다 조금 위의 값으로 튜닝
     window.onscroll = ()=>{
@@ -32,7 +39,6 @@
                 v_str += "<h1>추가 되용 혜림" + Math.ceil(Math.random()*100) +"</h1>";
             }
             document.querySelector("#disp").innerHTML += v_str;
-            
         }
     }
 </script>

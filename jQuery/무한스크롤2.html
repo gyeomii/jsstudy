@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+
+<body>
+    <div id="disp">
+        <table style="width:80%; margin :auto" border="2">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>나이</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
+        var v_tbody = document.querySelector("#tbody");
+        var v_cntPerOne = 30;     // 1번에 가져올 데이타 갯수
+        var v_cnt = 1;            // 몇번째?
+        var v_start = 0;
+        var v_str="";
+        var v_datas = JSON.parse(localStorage.getItem("myTable"));
+        var f_init = () => {
+            var v_end = v_cnt * v_cntPerOne;  // 끝 번호 괜히 한번 계산식으로 
+            for (var i = v_start; i <v_end; i++) {
+                v_str += "<tr>";
+                v_str += "<td>" + v_datas[i].id + "</td>";
+                v_str += "<td>" + v_datas[i].name + "</td>";
+                v_str += "<td>" + v_datas[i].age + "</td>";
+                v_str += "<td>" + v_datas[i].address + "</td>";
+                v_str += "</tr>";
+            }
+            v_start = v_end;
+            v_tbody.innerHTML += v_str
+            v_str = "";
+            v_cnt += 1;
+        }
+        f_init();
+        var v_tunningVal = 50;
+        window.onscroll = () => {
+            var v_top = parseInt(document.documentElement.scrollTop);
+            var v_clientHeight = document.documentElement.clientHeight;
+            var v_docHeight = document.documentElement.scrollHeight;
+            if ((v_top + v_clientHeight) >= (v_docHeight - v_tunningVal)) {
+                f_init();
+            }
+        }
+    //더미 데이타 맹글어 넣깅
+    </script>
+</body>
+
+</html>
