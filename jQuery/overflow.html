@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+<style>
+    #parent{
+        position:relative;
+        border:2px solid black;
+        width:200px;
+        height:200px;
+        overflow: hidden; /*hidden : 안보이게, scroll : 스크롤 생성, auto : 자동으로 스크롤*/
+    }
+    #child{
+        position:absolute;
+        width: 820px;
+        height: 400px;
+    }
+</style>
+</head>
+<body>
+    <div id="parent">
+        <div id="child" style="left:0";>
+            <img src="../image/20220824_092608.png" style="width:200px; height:200px;" alt=""/>
+            <img src="../image/KakaoTalk_20220928_165134918.jpg" style="width:200px; height:200px;" alt=""/>
+            <img src="../image/재열로뮤쿠마.png" style="width:200px; height:200px;" alt=""/>
+            <img src="../image/지영.png" style="width:200px; height:200px;" alt=""/>
+        </div>
+    </div>
+<script>
+    const cchild = document.querySelector("#child");
+    var f_move = ()=>{
+        if(!cchild.style.left){
+            cchild.style.left = "0px"; //left값 없을 때 초기화
+        }
+        console.log(cchild.style.left);
+        cchild.style.left = parseInt(cchild.style.left) + -1 + "px";
+        setTimeout(f_move,20);
+    }
+    f_move();
+</script>
+</body>
+</html>
