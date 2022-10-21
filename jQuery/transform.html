@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<style>
+    #nemo {
+        position: relative; /* 부모로 쓸 것*/
+        left: 200px;
+        width:300px;
+        height:300px;
+       /* border: 2px solid black;*/ /* 테두리 */
+        overflow: hidden;
+        /* transform: rotate(45deg); */ /* 45도 회전*/
+        transform-origin: center center ;
+        border-radius: 50%;
+    }
+    #circle1 {
+        position:absolute;
+        width:300px;
+        height:300px;
+        left:150px;
+        background-color: red;
+    }
+    #circle2 {
+        position:absolute;
+        width:300px;
+        height:300px;
+        top:150px;
+        background-color: blue;
+    }
+    #circle3 {
+        position:absolute;
+        width:300px;
+        height:300px;
+        right:150px;
+        background-color: yellow;
+    }
+    #circle4 {
+        position:absolute;
+        width:150px;
+        height:150px;
+        bottom:150px;
+        background-color: green;
+    }
+</style>
+</head>
+<body>
+    <h1>돌려돌려 돌림판~</h1>
+    <div id="nemo">
+        <div id="circle1"></div>
+        <div id="circle2"></div>
+        <div id="circle3"></div>
+        <div id="circle4"></div>
+    </div>
+    <input type="button" value="돌려" onclick="f_rotate()">
+    <input type="button" value="뽁사" onclick="f_copy()">
+<script>
+    const cnemo = document.querySelector("#nemo");
+
+    const f_copy = ()=>{
+        var copy1 = cnemo.cloneNode(true);  //매개변수 없음 얕은 복사
+        document.body.appendChild(copy1);
+    }
+    var v_gakdo = 0;
+    const f_rotate = ()=>{
+        v_gakdo = (v_gakdo + 1) % 360;
+        cnemo.style.transform = "rotate(" + v_gakdo + "deg)";
+        setTimeout(f_rotate,300);
+    }
+</script>    
+</body>
+</html>

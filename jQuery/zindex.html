@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<style>
+    img{
+        width:300px;
+        height:300px;
+    }
+    #parent{
+        position: relative;
+        width:300px;
+        height:300px;
+    }
+    .child{
+        position:absolute;
+        width:300px;
+        height:300px;
+    }
+</style>
+</head>
+<body>
+    <h1>z-index</h1>
+    <div id="parent">
+        <div class="child" style="z-index:100;"><img src="../image/20220824_092608.png"></div>
+        <div class="child" style="z-index:100;"><img src="../image/KakaoTalk_20220928_165134918.jpg"></div>
+        <div class="child" style="z-index:100;"><img src="../image/재열로뮤쿠마.png"></div>
+        <div class="child" style="z-index:100;"><img src="../image/지영.png"></div>
+    </div>
+    <Button type="button" onclick="previous()">&lt</Button>
+    <Button type="button" onclick="next()">&gt</Button>
+<script>
+   var childs = document.querySelectorAll(".child");
+    var f_init = () =>{
+        for(let i=0; i<childs.length; i++){
+            childs[i].style.zIndex = 1;    // 전부 1로 초기화
+        }
+    }
+
+    var startIndex = 0;
+    var f_shuffle = ()=>{
+        f_init(); 
+        childs[startIndex].style.zIndex = 999999; // 앞으로 끌어오고픈 것
+        startIndex++;
+        if(startIndex > 3){
+            startIndex = 0;
+        }
+        setTimeout(f_shuffle,1000);
+    }
+</script>
+</body>
+</html>
