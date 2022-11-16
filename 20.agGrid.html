@@ -7,14 +7,112 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
 </head>
 <body>
+    <input type="button" value="내보내깅" onclick="f_exp()">
     <!--그리드를 그릴 곳 지정-->
     <div id="myGrid" class="ag-theme-alpine" style="height:500px"></div>
 <script>
+//데이타를 csv 파일로 내보내깅, excel로 내보내기는 유료(ㅠㅠ)
+function f_exp(){
+    var v_params = {
+        suppressQuotes: "true",   // none, true
+        columnSeparator: "tab",   // none, tab, |
+        customHeader: "AAA BBB CCC DDD",  // 헤더명 추가 출력
+        customFooter: "This is Footer"    // 데이타 아래에 footer추가
+    }
+  gridOptions.api.exportDataAsCsv(v_params);
+}
+// 낯설지만 점심먹을 땐 그냥 그런가 보다 함
+/*
+function MyComp() {
+    return this;
+}
+
+MyComp.prototype.init = function(params) {
+        this.eGui = document.createElement('div');
+        this.eGui.innerHTML = `
+            <input type="date" value="" class="myCal" style="border:0px;width:0px"> 
+            <span class="mySpan">YYYY-MM-DD</span> 
+        `;
+        
+        this.myCal = this.eGui.querySelector('.myCal')
+        this.mySpan = this.eGui.querySelector('.mySpan')
+        this.mySpan.onclick = () => {
+            this.myCal.showPicker();
+        }
+        this.myCal.onchange = ()=> {
+            console.log("check",this.myCal.value);
+            this.mySpan.innerHTML = this.myCal.value;
+        }
+}
+MyComp.prototype.getGui=function(){
+    console.log("check1");
+    return this.eGui;
+}
+
+MyComp.prototype.refresh=function(){
+    console.log("check2");
+    return false;
+    
+}
+
+MyComp.prototype.destroy=function(){
+    console.log("check3");
+}
+*/
+//class 키워드 사용할 거면 아예 typescript (trans filer 파일변환)를 공부하는 것도 
+class MyComp {
+    init(params) {
+        this.eGui = document.createElement('div');
+        this.eGui.innerHTML = `
+            <input type="date" value="" class="myCal" style="border:0px;width:0px"> 
+            <span class="mySpan">YYYY-MM-DD</span> 
+        `;
+        
+        this.myCal = this.eGui.querySelector('.myCal')
+        this.mySpan = this.eGui.querySelector('.mySpan')
+        this.mySpan.onclick = () => {
+            this.myCal.showPicker();
+        }
+        this.myCal.onchange = ()=> {
+            console.log("check",this.myCal.value);
+            this.mySpan.innerHTML = this.myCal.value;
+        }
+    }
+
+    getGui(){
+        console.log("check1");
+        return this.eGui;
+    }
+
+    refresh(){
+        console.log("check2");
+        return false;
+    }
+
+    destroy(){
+        console.log("check3");
+    }
+}
+
 //컬럼 정의
 const columnDefs = [
-  { field: "make" },
-  { field: "model" },
-  { field: "price" }
+  {headerName:"수현", field: "make"},
+  {headerName:"유미", field: "model" },
+  {headerName:"상권", field: "price", editable:true }
+];
+
+//올림픽 메달 수상자 정보에 맞춘 컬럼 정의
+const columnDefs2 = [
+  { field: "athlete",checkboxSelection: true },
+  { field: "age" },
+  { field: "country"},
+  { field: "year" },
+  { field: "date", cellRenderer: MyComp},
+  { field: "sport" },
+  { field: "gold" },
+  { field: "silver" },
+  { field: "bronze" },
+  { field: "total" }
 ];
 
 // 데이타 정의
@@ -24,21 +122,40 @@ const rowData = [
   { make: "Porsche", model: "Boxster", price: 72000 }
 ];
 
-// let the grid know which columns and what data to use
+// 그리드 옵션 지정
 const gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData,
+  defaultColDef: {  // 모든 컬럼에 공통으로 주는 옵션 설정
+    sortable:true,
+    filter:true,
+    resizable:true,
+  },
+  pagination:true,
+  paginationAutoPageSize:true,
+ // paginationPageSize:8,  위 AutoPageSize랑 배타적
+  onCellClicked: params => {
+    //console.log('셀 눌렀넹 누느로 값 확인',params); // 필요할 때 수시로 확인
+    console.log("몇번째 줄 눌렀껭?",params.rowIndex)
+    console.log("클릭한 셀의 갑슨",params.value)
+  }
 };
-
 // 그리드 생성, 언제 DOMContentLoaded 이벤트가 발생했을 때
-// DOMContentLoaded(태그만 해석이 끝나면) vs load(태그, css, image로딩까지 끝났을 때)
-var MyGrid = new agGrid.Grid;
+// DOMContentLoaded(태그만 해석이 끝나면) vs load(태그,css, 이미지로딩까지 끝났을 때)
 document.addEventListener('DOMContentLoaded', () => {
     const gridDiv = document.querySelector('#myGrid');
-    new MyGrid(gridDiv, gridOptions); // new agGrid.Grid();
+    new agGrid.Grid(gridDiv, gridOptions);
 }); 
 
-
+// ag-grid 사이트에서 제공해 주는 올림픽 수상자 리스트 데이타 
+fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
+  .then(response => response.json())
+  .then(data => {  // ajax로 치면 success(data) 와 같음
+     // 컬럼 옵션 재정의
+     gridOptions.api.setColumnDefs(columnDefs2); 
+     // 가져온 데이타 grid에 로딩    
+     gridOptions.api.setRowData(data);
+  });
 </script>
 </body>
 </html>
